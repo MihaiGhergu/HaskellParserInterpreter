@@ -1,0 +1,88 @@
+			TEMA 1 - PP
+
+---Subpunctul a
+	In cadrul acestui task, mi am definit ClassState-u ca fiind un map ce are
+drept cheie un tuplu care contine un InstrType ca prim argument si un Int ca al
+doilea argument, iar ca valoare a map-ului am folosit o lista de Stringuri,
+aici vor fii stocate detaliile despre variabile/functii(nume, parametrii etc).
+Am ales drept cheie acel tuplu de InstrType si Int pentru a putea sa fac cheia
+unica, adica sa pot adauga mai multe variabile/functii, iar acel Int,
+reprezentand un contor pe care il maresc de fiecare data cand adaug in Map
+o functie si o variabila. Apoi am construit functiile care au fost cerute in
+enuntul temei. Pentru functia "initEmptyClass" am returnat un Map gol. 
+La functia "insertIntoClass", am inserat in map folosind functia predefinita
+a lui Map(insert), insa aici m am folosit de functia auxiliara f1 care
+calculeza dimensiunea unui map, iar de fiecare data cand inseram
+maream si acel contor din cheie, pentru a putea sa mi fac cheia unica si sa
+pot insera alta data variabile sau functiile, fara sa se suprascrie ce am
+introdus anterior. Iar la functia "getValues", mi-am construit o functie
+auxiliara f2 care imi returneaza un classstate cu doar functii/variabile.
+Am mai scris o functie care imi returneaza map-ul dintr un ClassState.
+Apoi functia mea se foloseste de metoda predifinita pt map "elems"
+care returneaza toate valorile dintr un map, aceasta fiind aplicate pe
+map-ul din classstate ul returnat de functia f2.
+
+---Subpunctul b
+	In acest task, in primul rand mi am definit programul ca fiind o lista
+de SPrograme(clase), unde Sprogram este o structura definita de mine care
+contine numele_clase, numele_parintelui si informatiile din classState. La
+mine instructinea este un String, adica tot ce se citeste din fisier.
+Pentru functia "initEmptyProgram", am initializat un program gol, cu o clasa cu
+numele clasei "Global", numele parintelui tot GLobal si aceasta clasa fiind
+goala. Pentru functia "getVars" am luat din program(care este o lista de 
+SPrograme), am luat fiecare elemnet din aceasta lista am cautat clasa 
+Global si am extras variabilele din capul info al elementului de tip
+SProgram, acest lucru se face recursiv pentru fiecare clasa din subprogram.
+La functia "getClasses", am facut (:) intre fiecare nume de clasa din 
+fiecare element din SProgram. La functia "getParentClass", am cazut in 
+Program clasa daca ca parametru de functie si returnam parintele acestei clase.
+La "getFuncsForClass", am cautat clasa data ca parametru si am returnat
+cu functia "getValues" toate functiile din fiecare clasa din subprogram.
+In cadrul functiei parse folosesc functia lines din Data.List, care imparte
+un String in Lista de stringuri dupa '\n', pe rezultatul careia am aplicat
+filter pentru a elimina Stringurile vide. Pentru functia interpret am avut
+nevoie de de o functie care imi imparte un string dupa mai multe caractere
+si returneaza o lista de stringuri. In cadrul acestei functii de split am
+luat fiecare caracter din string si l-am comparat cu caracterele dupa care
+aveam nevoie sa impart, in caz ca erau egale faceam cons cu stringul vid.
+Apoi pe rezultatul acestei functii am aplicat filter pentru a elimina "".
+Pentru functia "interpret", mi am definit functia paramValizi, care 
+primeste o lista de String si un program si returneaza un Int,acest int
+reprezinta numarul de parametrii valizi ai functiei. In functia interpret
+am facut mai multe verificari pe lista de stringuri rezultata din functia 
+de parse, daca instalneam ca prim element de pe linia respectiva cuvantul
+"class" si aveam lungimea listei 2, verificam daca exista clasa respectiva,
+daca exista treceam peste acea linie si altfel, cream o noua clasa cu
+numele din instructiune si parintele global. Apoi daca primul element din
+lista era class si dimensiune 4 inseamna ca, clasa extindea o alta clasa,
+deci verific daca exista clasa, daca da ignor linia, apoi verific daca
+exista parintele, daca da construiec noua clasa cu parintele respectiv
+altfel construiesc o clasa cu parintele global. Daca primul element din
+lista rezultata din parsarea unei linii este "newvar" si lungimea este 3,
+verific daca clasa exista atunci parcurg fiecare elementele din program
+intr un cu un map si caut clasa "Global" si inserez vechiunl program
+noua variabila. Iar in cazul cand am functii verific daca exista tipul
+returnat al functiei, verific daca exista clasa si daca toti parametrii
+sunt valizi(daca rezultatul returnat de functia paramValizi este egal
+cu dimensiunea listei de parametrii) atunci fac cam acelasi lucru ca
+pentru variabile, doar ca aici caut clasa in care trebuie sa adaug, 
+si adaug alta informatie despre functii.
+
+--Subpunctul c
+Pentru acest task am folosit mai multe functii auxiliare. In functia,
+varExist, verific daca o variabila este in lista de variabile a 
+programului, aceasta functie primeste ca parametrii variabila si
+lista de variabile a programului, si intoarce tipul daca a gasit-o
+sau Nothing, altfel. Functia "takeAllFuncsAvailable", intoarce
+toate functiile din lantul de mosteniri ale unei clase plecand
+de la clasa data ca parametru. Functia "funcExist", primeste 
+ca parametru un Maybe String daca clasa variabilei exista in program,
+un String, functia, programul, o lista de maybe string in care sunt
+salvati pasii anterioari ai functiei infer pe acea expresie, si
+[[String]], care reprezinta toate functiile din program. La acesta
+am ca si cazuri de baza daca nu exista functii in clasa atunci 
+intoarce nothing si daca o variabila nu exista. APoi verific daca
+parintele clasei curente  nu este global si apelez recursiv functia
+pentru clasa parinte, apoi verific daca param si numele coincid, si 
+daca da intorc tipul care trebuie intors, altfel apelez recursiv pentru
+celelalte functii din lista de functii data ca parametru.
